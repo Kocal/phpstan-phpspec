@@ -1,2 +1,8 @@
 includes:
     - extension.neon
+
+parameters:
+    ignoreErrors:
+        # Should be fixed by Symfony
+        - '#Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 0-1 required.#'
+        - '#Parameter \#1 \$event of method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) expects object, string given.#'

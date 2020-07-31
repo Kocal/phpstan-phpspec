@@ -1,0 +1,31 @@
+name: Check code style
+
+on:
+    push:
+        branches:
+            - master
+    pull_request:
+        types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+    check_cs:
+        runs-on: ${{ matrix.operating-system }}
+        strategy:
+            fail-fast: false
+            matrix:
+                operating-system: [ubuntu-latest, windows-latest]
+                php-versions: ['7.2', '7.3', '7.4']
+        name: PHP ${{ matrix.php-versions }}, ${{ matrix.operating-system }}
+        steps:
+            -   uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php-versions }}
+
+            -   name: Install composer dependencies
+                run: composer install --prefer-dist --no-interaction --no-progress
+
+            -   name: Check code style
+                run: composer check-cs
